@@ -11,7 +11,7 @@ export default props => {
 
             <Text style={styles.title}>To Do</Text>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => { props.toNewTask() }}>
                 <Feather name='plus' size={23} />
             </TouchableOpacity>
         </View>

@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 
 export default props => {
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => { props.toChangeText(props.data) }}>
             <View style={styles.border} />
 
             <View style={styles.contents}>
@@ -17,7 +17,7 @@ export default props => {
                     <Text style={styles.descriptionData}> {props.data.hour} </Text>
                 </View>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => { props.toDelete(props.data.id) } }>
                     <Feather name='more-vertical' size={23} />
                 </TouchableOpacity>
             </View>

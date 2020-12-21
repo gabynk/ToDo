@@ -1,44 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, StatusBar, FlatList } from 'react-native';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
+import NewTask from '../components/NewTask';
 
-const list = [
-    {
-        'id': '1',
-        'description': 'Tarefa',
-        'data': '12/12',
-        'hour': '12:12'
-    },
-    {
-        'id': '2',
-        'description': 'Estudo',
-        'data': '12/15',
-        'hour': '15:12'
-    },
-    {
-        'id': '3',
-        'description': 'Compra',
-        'data': '12/20',
-        'hour': '10:00'
-    },
-]
+export default function Home() {
+    const [showNewTask, setShowNewTask] = useState(false);
+    const [tasks, setTaskes] = useState([
+        {
+            'id': '1',
+            'description': 'tarefa',
+            'data': '12/20',
+            'hour': '10:00'
+        },
+        {
+            'id': '2',
+            'description': 'estudos',
+            'data': '12/20',
+            'hour': '10:00'
+        },
+    ]);
 
-const Home = () => {
+    function newTask() {
+        setShowNewTask(!showNewTask);
+    }
+
+    function addNewTask(task) {
+        let newTask = {};
+
+        if(task != "") {
+            newTask = {
+                'id': tasks.length || 0 + 1,
+                'description': task,
+                'data': '12/20',
+                'hour': '10:00'
+            }
+        }
+        console.log(newTask)
+
+        setShowNewTask(!showNewTask);
+    }
+
+    function deleteTask(id) {
+        const newTasks = tasks.filter(task => {
+            return task.id != id; 
+        });
+
+        setTaskes(newTasks);
+    }
+    
+    function changeTextTask(item) {
+        console.log(item)
+    }
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" />
 
-            <Header />
+            <Header toNewTask={newTask} />
+
+            {showNewTask === true && (
+                <NewTask 
+                    toAddNewTask={addNewTask}
+                    toCancel={newTask}
+                />
+            )}
 
             <View style={styles.contents} >
                 <FlatList
-                    data={list}
+                    data={tasks}
                     keyExtractor={item => item.id}
                     renderItem={({item}) => {
                         return (
-                            <TaskHome data={item} />
+                            <TaskHome 
+                                data={item} 
+                                toDelete={deleteTask} 
+                                toChangeText={changeTextTask}
+                            />
                         )
                     }}
                 />
@@ -46,8 +85,6 @@ const Home = () => {
         </View>
     );
 };
-
-export default Home;
 
 const styles = StyleSheet.create({
     container: {
