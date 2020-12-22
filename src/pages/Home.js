@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, StatusBar, FlatList } from 'react-native';
+
+import { useDispatch } from 'react-redux';
+import { addTodo } from '../actions';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
@@ -22,23 +25,21 @@ export default function Home() {
         },
     ]);
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        addNewTask();
+    }, []);
+
     function newTask() {
         setShowNewTask(!showNewTask);
     }
 
     function addNewTask(task) {
-        let newTask = {};
-
         if(task != "") {
-            newTask = {
-                'id': tasks.length || 0 + 1,
-                'description': task,
-                'data': '12/20',
-                'hour': '10:00'
-            }
+            dispatch(addTodo(task))
         }
-        console.log(newTask)
-
+        
         setShowNewTask(!showNewTask);
     }
 
@@ -97,4 +98,4 @@ const styles = StyleSheet.create({
         padding: 10
     }
 
-})
+});
