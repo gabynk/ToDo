@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
         maxHeight: 100,
         flexDirection: 'row',
         marginBottom: 10,
-        backgroundColor: '#ffadad'
+        backgroundColor: '#fff',
+        marginTop: 10
     },
 
     border: {
@@ -61,14 +62,13 @@ const styles = StyleSheet.create({
     },
     
     date: {
-        flex: 1,
+        flex: 0.5,
         alignItems: 'flex-end',
         justifyContent: 'center'
     },
     buttons: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'stretch',
         justifyContent: 'space-between'
     }
 })

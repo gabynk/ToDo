@@ -1,7 +1,13 @@
-let nextId = 0;
+export const addTodo = data => ({
+    type: 'ADD_TODO',
+    data
+});
 
-export const addTodo = text => ({
-  type: 'ADD_TODO',
-  id: nextId++,
-  text
+export const deleteTodo = id => ({
+    type: 'DELETE_TODO',
+    id
+});
+
+export const deleteAllTodo = props => ({
+    type: 'DELETE_ALL_TODO'
 });

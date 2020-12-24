@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, StatusBar, FlatList } from 'react-native';
 
-import { useDispatch } from 'react-redux';
-import { addTodo } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, deleteTodo } from '../actions/todos';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
@@ -10,26 +10,10 @@ import NewTask from '../components/NewTask';
 
 export default function Home() {
     const [showNewTask, setShowNewTask] = useState(false);
-    const [tasks, setTaskes] = useState([
-        {
-            'id': '1',
-            'description': 'tarefa',
-            'data': '12/20',
-            'hour': '10:00'
-        },
-        {
-            'id': '2',
-            'description': 'estudos',
-            'data': '12/20',
-            'hour': '10:00'
-        },
-    ]);
+
+    const tasks = useSelector(state => state.todos.data);
 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        addNewTask();
-    }, []);
 
     function newTask() {
         setShowNewTask(!showNewTask);
@@ -37,18 +21,24 @@ export default function Home() {
 
     function addNewTask(task) {
         if(task != "") {
-            dispatch(addTodo(task))
+            const month = new Date().getMonth() - 1;
+            const days = new Date().getDay();
+
+            const newTask = {
+                'id': tasks.length,
+                'description': task,
+                'data': `${month} / ${days}`,
+                'hour': '10:00'
+            };
+
+            dispatch(addTodo(newTask));
         }
         
         setShowNewTask(!showNewTask);
     }
 
     function deleteTask(id) {
-        const newTasks = tasks.filter(task => {
-            return task.id != id; 
-        });
-
-        setTaskes(newTasks);
+        dispatch(deleteTodo(id));
     }
     
     function changeTextTask(item) {
@@ -71,7 +61,7 @@ export default function Home() {
             <View style={styles.contents} >
                 <FlatList
                     data={tasks}
-                    keyExtractor={item => item.id}
+                    keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
                         return (
                             <TaskHome 
@@ -90,7 +80,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#CFCFCF'
+        backgroundColor: '#f2f2f2'
     },
 
     contents: {

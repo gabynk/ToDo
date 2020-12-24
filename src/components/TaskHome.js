@@ -18,7 +18,7 @@ export default props => {
                 </View>
 
                 <TouchableOpacity onPress={() => { props.toDelete(props.data.id) } }>
-                    <Feather name='more-vertical' size={23} />
+                    <Feather name='x' size={18} />
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
