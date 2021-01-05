@@ -21,17 +21,23 @@ export default function Home() {
 
     function addNewTask(task) {
         if(task != "") {
-            const month = new Date().getMonth() - 1;
-            const days = new Date().getDay();
+            const today = new Date();
 
-            const newTask = {
-                'id': tasks.length,
-                'description': task,
-                'data': `${month} / ${days}`,
-                'hour': '10:00'
-            };
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let day = today.getDate();
+            let hour = today.getHours();
+            let min = today.getMinutes();
+    
+            month = month < 10 ? `0${month}` : month;
+            day = day < 10 ? `0${day}` : day;
+            hour = hour < 10 ? `${hour}0` : hour;
+            min = min < 10 ? `${min}0` : min;
+            
+            const newToday = `${year}-${month}-${day}`;
+            const hours = `${hour}:${min}`;
 
-            dispatch(addTodo(newTask));
+            dispatch(addTodo(task, newToday, hours));
         }
         
         setShowNewTask(!showNewTask);
@@ -61,7 +67,7 @@ export default function Home() {
             <View style={styles.contents} >
                 <FlatList
                     data={tasks}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => item.id}
                     renderItem={({item}) => {
                         return (
                             <TaskHome 

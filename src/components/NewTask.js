@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 export default props => {
     const [text, setText] = useState("");
+    const [today, setToday] = useState("");
 
-    function toDay() {
-        const year = new Date().getFullYear();
-        const month = new Date().getMonth() - 1;
-        const days = new Date().getDay();
+    useEffect(() => {
+        const today = new Date();
 
-        const today = `${days} / ${month} / ${year}`
+        let year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        let day = today.getDate();
 
-        return today;
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+        const newToday = `${day} / ${month} / ${year}`;
+
+        setToday(newToday);
+    }, []);
+
+    const handleAddTask = () => {
+        props.toAddNewTask(text.toString());
+    }
+
+    const handleCancel = () => {
+        props.toCancel();
     }
 
     return (
@@ -21,7 +34,7 @@ export default props => {
 
             <View style={styles.contents}>
                 <View style={styles.date}>
-                    <Text> { toDay() } </Text>
+                    <Text>{today}</Text>
                 </View>
 
                 <View>
@@ -33,8 +46,8 @@ export default props => {
                 </View>
 
                 <View style={styles.buttons}>
-                    <Button title="ADD" color="#65ed93" onPress={() => { props.toAddNewTask(text) }} />
-                    <Button title="CANCEL" color="#fc6767" onPress={() => { props.toCancel() }} />
+                    <Button title="ADD" color="#65ed93" onPress={handleAddTask} />
+                    <Button title="CANCEL" color="#fc6767" onPress={handleCancel} />
                 </View>
             </View>
         </View>

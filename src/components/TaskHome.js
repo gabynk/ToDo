@@ -3,18 +3,27 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 export default props => {
+    const day = () => {
+        const data = props.data.data;
+
+        const month = data.substring(5, 7);
+        const day = data.substring(8);
+        
+        return `${day}/${month}`;
+    };
+
     return (
         <TouchableOpacity style={styles.container} onPress={() => { props.toChangeText(props.data) }}>
             <View style={styles.border} />
 
             <View style={styles.contents}>
                 <View style={styles.descriptionView}>
-                    <Text style={styles.description}> {props.data.description} </Text>
+                    <Text style={styles.description}>{props.data.description}</Text>
                 </View>
 
                 <View style={styles.contentData}>
-                    <Text style={styles.descriptionData}> {props.data.data} </Text>
-                    <Text style={styles.descriptionData}> {props.data.hour} </Text>
+                    <Text style={styles.descriptionData}>{day()}</Text>
+                    <Text style={styles.descriptionData}>{props.data.hour}</Text>
                 </View>
 
                 <TouchableOpacity onPress={() => { props.toDelete(props.data.id) } }>
@@ -31,7 +40,7 @@ const styles = StyleSheet.create({
         maxHeight: 50,
         flexDirection: 'row',
         marginBottom: 10,
-        backgroundColor: '#ffadad'
+        backgroundColor: '#FFF2F2'
     },
 
     border: {
