@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 
 export default props => {
     const [text, setText] = useState("");
@@ -21,7 +20,7 @@ export default props => {
     }, []);
 
     const handleAddTask = () => {
-        props.toAddNewTask(text.toString());
+        props.toAddNewTask(text);
     }
 
     const handleCancel = () => {

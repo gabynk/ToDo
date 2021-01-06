@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, StatusBar, FlatList } from 'react-native';
+import { StyleSheet, View, Text, StatusBar } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo } from '../actions/todos';
+import { addTodo, deleteTodo } from '../store/actions/todos';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
@@ -65,19 +65,14 @@ export default function Home() {
             )}
 
             <View style={styles.contents} >
-                <FlatList
-                    data={tasks}
-                    keyExtractor={(item, index) => item.id}
-                    renderItem={({item}) => {
-                        return (
-                            <TaskHome 
-                                data={item} 
-                                toDelete={deleteTask} 
-                                toChangeText={changeTextTask}
-                            />
-                        )
-                    }}
-                />
+                {tasks.map((item, index) => (
+                    <TaskHome 
+                        key={item.id}
+                        data={item} 
+                        toDelete={deleteTask} 
+                        toChangeText={changeTextTask}
+                    />
+                ))}
             </View>
         </View>
     );

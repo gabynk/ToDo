@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import Store from './src/reducers';
+import Store from './src/store';
 
 import Home from './src/pages/Home';
 
