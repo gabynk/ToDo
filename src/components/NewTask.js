@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, KeyboardAvoidingView } from 'react-native';
 
 export default props => {
     const [text, setText] = useState("");
@@ -28,25 +28,32 @@ export default props => {
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.border} />
+        <View style={styles.modal}>
+            <View style={styles.container}>
+                <View style={styles.border} />
 
-            <View style={styles.contents}>
-                <View style={styles.date}>
-                    <Text>{today}</Text>
-                </View>
+                <View style={styles.contents}>
+                    <View style={styles.date}>
+                        <Text>{today}</Text>
+                    </View>
 
-                <View>
-                    <TextInput 
-                        onChangeText={text => setText(text)}
-                        value={text}
-                        underlineColorAndroid="#000"
-                    />
-                </View>
+                    <View style={styles.input}>
+                        <TextInput 
+                            onChangeText={text => setText(text)}
+                            value={text}
+                            underlineColorAndroid="#000"
+                            maxLength={65}
+                        />
+                    </View>
 
-                <View style={styles.buttons}>
-                    <Button title="ADD" color="#65ed93" onPress={handleAddTask} />
-                    <Button title="CANCEL" color="#fc6767" onPress={handleCancel} />
+                    <View style={styles.buttons}>
+                        <View style={styles.button}>
+                            <Button title="ADD" color="#65ed93" onPress={handleAddTask} />
+                        </View>
+                        <View style={styles.button}>
+                            <Button title="CANCEL" color="#fca9a9" onPress={handleCancel} />
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
@@ -54,19 +61,27 @@ export default props => {
 }
 
 const styles = StyleSheet.create({
+    modal: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: 'rgba(0, 0, 0, 0.3)'
+    },
     container: {
         flex: 1,
-        maxHeight: 100,
+        maxHeight: 150,
         flexDirection: 'row',
-        marginBottom: 10,
-        backgroundColor: '#fff',
-        marginTop: 10
+        backgroundColor: '#efefef',
+        marginHorizontal: 10,
+        borderRadius: 10
     },
-
+    
     border: {
         flex: 1,
         maxWidth: 10,
-        backgroundColor: '#aff'
+        backgroundColor: '#FFDDDD',
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
     },
     contents: {
         flex: 1,
@@ -74,13 +89,19 @@ const styles = StyleSheet.create({
     },
     
     date: {
-        flex: 0.5,
+        flex: 1,
         alignItems: 'flex-end',
         justifyContent: 'center'
     },
+    input: {
+        flex: 1
+    },
     buttons: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        flexDirection: 'row'
+    },
+
+    button: {
+        flex: 1
     }
 })

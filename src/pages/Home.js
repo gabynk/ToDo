@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, StatusBar } from 'react-native';
+import { StyleSheet, View, Modal, StatusBar, ScrollView } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo } from '../store/actions/todos';
+import { addTodo, deleteTodo, deleteAllTodo } from '../store/actions/todosActions';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
@@ -19,7 +19,8 @@ export default function Home() {
         setShowNewTask(!showNewTask);
     }
 
-    function addNewTask(task) {
+    const addNewTask = async (task) => {
+        setShowNewTask(!showNewTask);
         if(task != "") {
             const today = new Date();
 
@@ -37,13 +38,11 @@ export default function Home() {
             const newToday = `${year}-${month}-${day}`;
             const hours = `${hour}:${min}`;
 
-            dispatch(addTodo(task, newToday, hours));
+            await dispatch(addTodo(task, newToday, hours));
         }
-        
-        setShowNewTask(!showNewTask);
     }
 
-    function deleteTask(id) {
+    function deleteOneTask(id) {
         dispatch(deleteTodo(id));
     }
     
@@ -57,23 +56,27 @@ export default function Home() {
 
             <Header toNewTask={newTask} />
 
-            {showNewTask === true && (
+            <Modal 
+                animationType="slide"
+                transparent={true}
+                visible={showNewTask}
+            >
                 <NewTask 
                     toAddNewTask={addNewTask}
                     toCancel={newTask}
                 />
-            )}
+            </Modal>
 
-            <View style={styles.contents} >
+            <ScrollView style={styles.contents} >
                 {tasks.map((item, index) => (
                     <TaskHome 
                         key={item.id}
                         data={item} 
-                        toDelete={deleteTask} 
+                        toDelete={deleteOneTask} 
                         toChangeText={changeTextTask}
                     />
                 ))}
-            </View>
+            </ScrollView>
         </View>
     );
 };
