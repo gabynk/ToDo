@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Modal, StatusBar, ScrollView } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo, deleteAllTodo } from '../store/actions/todosActions';
+import { deleteTodo } from '../store/reducers/todosSlice';
+import { addTodoAction } from '../store/actions/todosActions';
 
 import Header from '../components/Header';
 import TaskHome from '../components/TaskHome';
@@ -38,12 +39,12 @@ export default function Home() {
             const newToday = `${year}-${month}-${day}`;
             const hours = `${hour}:${min}`;
 
-            await dispatch(addTodo(task, newToday, hours));
+            await dispatch(addTodoAction(task, newToday, hours));
         }
     }
 
     function deleteOneTask(id) {
-        dispatch(deleteTodo(id));
+        dispatch(deleteTodo({ id: id }));
     }
     
     function changeTextTask(item) {

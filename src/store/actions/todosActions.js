@@ -1,8 +1,8 @@
-import { createAction } from '@reduxjs/toolkit';
+import { addTodo } from '../reducers/todosSlice'
 
 let id = 0;
 
-export const addTodo = createAction('ADD_TODO', (task, newToday, hours) => {
+export const addTodoAction = (task, newToday, hours) => {
     const newTask = {
         'id': id++,
         'description': task,
@@ -10,15 +10,5 @@ export const addTodo = createAction('ADD_TODO', (task, newToday, hours) => {
         'hour': hours
     };
 
-    return {
-        payload: newTask
-    }
-});
-
-export const deleteTodo = createAction('DELETE_TODO', (id) => {
-    return {
-        payload: id
-    }
-});
-
-export const deleteAllTodo = createAction('DELETE_ALL_TODO');
+    return addTodo({payload: newTask})
+};

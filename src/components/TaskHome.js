@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
-export default props => {
+export default (props) => {
     const day = () => {
         const data = props.data.data;
 
