@@ -2,15 +2,20 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
-export default (props) => {
-    const day = () => {
-        const data = props.data.data;
+// import { maskDateBr } from '../utils/mask';
 
-        const month = data.substring(5, 7);
-        const day = data.substring(8);
-        
-        return `${day}/${month}`;
-    };
+export default (props) => {
+    function getNewDate() {
+        let value = props.data.data
+        const month = value.substring(5, 7);
+        const day = value.substring(8);
+    
+        value = `${day}/${month}`;
+
+        console.log("da", props.data.data)
+        // return maskDateBr(props.data.data)
+        return value
+    }
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => { props.toChangeText(props.data) }}>
@@ -22,7 +27,7 @@ export default (props) => {
                 </View>
 
                 <View style={styles.contentData}>
-                    <Text style={styles.descriptionData}>{day()}</Text>
+                    <Text style={styles.descriptionData}>{getNewDate()}</Text>
                     <Text style={styles.descriptionData}>{props.data.hour}</Text>
                 </View>
 

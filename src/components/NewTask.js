@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
+
+import { getNowDate } from '../utils/config';
+import { maskDateBr } from '../utils/mask';
 
 export default props => {
     const [text, setText] = useState("");
     const [today, setToday] = useState("");
 
     useEffect(() => {
-        const today = new Date();
-
-        let year = today.getFullYear();
-        let month = today.getMonth() + 1;
-        let day = today.getDate();
-
-        month = month < 10 ? '0' + month : month;
-        day = day < 10 ? '0' + day : day;
-        const newToday = `${day} / ${month} / ${year}`;
-
-        setToday(newToday);
+        let day = getNowDate();
+        day = maskDateBr(day);
+        setToday(day);
     }, []);
 
     const handleAddTask = () => {
@@ -38,7 +33,7 @@ export default props => {
                     </View>
 
                     <View style={styles.input}>
-                        <TextInput 
+                        <TextInput
                             onChangeText={text => setText(text)}
                             value={text}
                             underlineColorAndroid="#000"
@@ -62,9 +57,9 @@ export default props => {
 
 const styles = StyleSheet.create({
     modal: {
-        flex: 1, 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.3)'
     },
     container: {
@@ -75,7 +70,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderRadius: 10
     },
-    
+
     border: {
         flex: 1,
         maxWidth: 10,
@@ -87,7 +82,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 10
     },
-    
+
     date: {
         flex: 1,
         alignItems: 'flex-end',

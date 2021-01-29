@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Modal, StatusBar, ScrollView } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,31 +22,15 @@ export default function Home() {
 
     const addNewTask = async (task) => {
         setShowNewTask(!showNewTask);
-        if(task != "") {
-            const today = new Date();
-
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            let day = today.getDate();
-            let hour = today.getHours();
-            let min = today.getMinutes();
-    
-            month = month < 10 ? `0${month}` : month;
-            day = day < 10 ? `0${day}` : day;
-            hour = hour < 10 ? `${hour}0` : hour;
-            min = min < 10 ? `${min}0` : min;
-            
-            const newToday = `${year}-${month}-${day}`;
-            const hours = `${hour}:${min}`;
-
-            await dispatch(addTodoAction(task, newToday, hours));
+        if (task != "") {
+            await dispatch(addTodoAction(task));
         }
     }
 
     function deleteOneTask(id) {
         dispatch(deleteTodo({ id: id }));
     }
-    
+
     function changeTextTask(item) {
         console.log(item)
     }
@@ -57,12 +41,12 @@ export default function Home() {
 
             <Header toNewTask={newTask} />
 
-            <Modal 
+            <Modal
                 animationType="slide"
                 transparent={true}
                 visible={showNewTask}
             >
-                <NewTask 
+                <NewTask
                     toAddNewTask={addNewTask}
                     toCancel={newTask}
                 />
@@ -70,10 +54,10 @@ export default function Home() {
 
             <ScrollView style={styles.contents} >
                 {tasks.map((item, index) => (
-                    <TaskHome 
+                    <TaskHome
                         key={item.id}
-                        data={item} 
-                        toDelete={deleteOneTask} 
+                        data={item}
+                        toDelete={deleteOneTask}
                         toChangeText={changeTextTask}
                     />
                 ))}

@@ -1,8 +1,10 @@
-import { addTodo } from '../reducers/todosSlice'
+import { getNowDate, getNowHour } from '../../utils/config';
 
 let id = 0;
 
-export const addTodoAction = (task, newToday, hours) => {
+export const addTodoAction = (task) => {
+    const newToday = getNowDate();
+    const hours = getNowHour();
     const newTask = {
         'id': id++,
         'description': task,
@@ -10,5 +12,5 @@ export const addTodoAction = (task, newToday, hours) => {
         'hour': hours
     };
 
-    return addTodo({payload: newTask})
+    return addTodo({ payload: newTask })
 };
